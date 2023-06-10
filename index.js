@@ -54,8 +54,7 @@ console.log = function(){
 	}
 	consoleOutputs.push(finalOutput);
 	   
-	log.apply(console, args);
-}
+	log.apply(console, args);}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
