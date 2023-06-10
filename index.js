@@ -60,7 +60,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(express.static(path.join(__dirname,"public")));
 
-const expressServer = app.listen(2020,"0.0.0.0",()=>{
+const expressServer = app.listen(8080,"0.0.0.0",()=>{
 	console.log("Listening on port 2020");
 });
 
