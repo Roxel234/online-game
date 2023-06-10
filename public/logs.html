@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			background: rgb(77, 77, 77);
+			color: white;
+			overflow: hidden;
+		}
+
+		#main-div {
+			background: rgb(255, 127, 0);
+			width: 55%; 
+			margin: 0 auto;
+			border-radius: 20px;
+			height: 600px;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		#logs-div {
+			font-family: monospace;
+			font-size: 20px;
+			background: black;
+			width: 90%;
+			border-radius: 20px;
+			margin: 0 auto;
+			height: 500px;
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
+
+		#list {
+			padding-left: 15px;
+		}
+	</style>
+	<title></title>
+</head>
+<body>
+	<div id="main-div">
+		<h1>Server's console logs:</h1>
+		<div id="logs-div">
+			<p id="list">Loading logs...<br>Wait a little...</p>
+		</div>
+	</div>
+
+	<script src="socket.io/socket.io.js"></script>
+	<script>
+		const socket = io();
+
+		const list = document.getElementById('list')
+
+		socket.on("connect",()=>{
+			socket.emit("init-console");
+		});
+
+		socket.on("console-update",(data)=>{
+			console.log(data);
+			list.innerHTML = "";
+			for (var i = 0; i < data.length; i++) {
+				list.innerHTML += data[i] + "<br>"
+			}
+		});
+	</script>
+</body>
+</html>
