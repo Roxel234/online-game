@@ -1,15 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue } from "firebase/database";
-const firebaseConfig = {
-  apiKey: "AIzaSyDS8vN-wwgm9c50ZIGlluVhNrZC0LxcbZk",
-  authDomain: "nodejs-proyect-1.firebaseapp.com",
-  projectId: "nodejs-proyect-1",
-  storageBucket: "nodejs-proyect-1.appspot.com",
-  messagingSenderId: "150063946661",
-  appId: "1:150063946661:web:5a98375a82b52d3f30e64c",
-  databaseURL: "https://nodejs-proyect-1-default-rtdb.firebaseio.com",
-};
-const fireApp = initializeApp(firebaseConfig);
+import { fireConfig } from "./fireConfig.js";
+
+console.log(JSON.stringify(fireConfig));
+
+const fireApp = initializeApp(fireConfig);
 const database = getDatabase(fireApp);
 
 function writeData(path,data){
@@ -61,10 +56,37 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname,"public")));
 
 const expressServer = app.listen(8080,"0.0.0.0",()=>{
-	console.log("Listening on port 2020");
+	console.log("Server started Info:");
+	console.log({
+		linode: {
+			ip: "23.239.4.209",
+			port: "80",
+			url: "http://23.239.4.209"
+		},
+		local: {
+			ip: "127.0.0.1",
+			port: "8080",
+			url: "http://127.0.0.1:8080"
+		},
+		web: {
+			ip: "not available",
+			port: "80",
+			url: "http://dragol.lat"
+		}
+	});
 });
 
 const io = new Server(expressServer);
+
+function createAccount(data){
+	let path = "users/"+data.user;
+	let info = {password:data.password};
+
+	getData("users",(val)=>console.log(val));
+
+	writeData(path,info);
+	console.log("Created user:",data.user);
+}
 
 io.on("connection",(socket)=>{
 	let address = socket.request.connection._peername;
@@ -78,5 +100,9 @@ io.on("connection",(socket)=>{
 				lastLen = consoleOutputs.length;
 			}
 		},250);
+	});
+
+	socket.on("account-create",(data)=>{
+		createAccount(data);
 	});
 });

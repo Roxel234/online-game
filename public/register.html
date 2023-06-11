@@ -6,11 +6,11 @@
 	<title></title>
 </head>
 <body>
-	<h1>Login to Dragol</h1>
+	<h1>Register to Dragol</h1>
 	<p id="error"><br></p>
 	<input type="text" placeholder="Username" id="user">
 	<input type="password" placeholder="Password" id="clave">
-	<button id="seguir">Login</button>
+	<button id="seguir">Register</button>
 
 	<script src="socket.io/socket.io.js"></script>
 	<script>
@@ -32,7 +32,7 @@
 				user:loginForm.user.value,
 				password:loginForm.clave.value
 			};
-			socket.emit("account-login",data);
+			socket.emit("account-create",data);
 		});
 	</script>
 </body>
