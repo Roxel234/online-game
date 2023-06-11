@@ -2,27 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { fireConfig } from "./fireConfig.js";
 
-console.log(JSON.stringify(fireConfig));
-
-const fireApp = initializeApp(fireConfig);
-const database = getDatabase(fireApp);
-
-function writeData(path,data){
-	set(ref(database,path),data);
-}
-
-function getData(path,then){
-	onValue(ref(database,path),(snap)=>then(snap.val()));
-};
-
-import express from "express";
-import path from "path";
-const app = express();
-import { Server } from "socket.io";
-import { fileURLToPath } from 'url';
-
 const consoleOutputs = [];
-
 let log = console.log;
 console.log = function(){
 	let dateHours = new Date().getHours().toString();
@@ -50,6 +30,24 @@ console.log = function(){
 	consoleOutputs.push(finalOutput);
 	   
 	log.apply(console, args);}
+console.log(JSON.stringify(fireConfig));
+
+const fireApp = initializeApp(fireConfig);
+const database = getDatabase(fireApp);
+
+function writeData(path,data){
+	set(ref(database,path),data);
+}
+
+function getData(path,then){
+	onValue(ref(database,path),(snap)=>then(snap.val()));
+};
+
+import express from "express";
+import path from "path";
+const app = express();
+import { Server } from "socket.io";
+import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
