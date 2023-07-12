@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { fireConfig } from "./fireConfig.js";
-
+//xd
 const consoleOutputs = [];
 let log = console.log;
 console.log = function(){
